@@ -14,6 +14,8 @@ import requests
 URL_API = "https://portal.gupy.io/api/job-search/jobs"
 # Valor do campo "type" que marca vaga de estágio
 TIPO_ESTAGIO = "vacancy_type_internship"
+# Valor do campo "type" que marca vaga de banco de talentos (cadastro para vagas futuras)
+TIPO_BANCO_TALENTOS = "vacancy_type_talent_pool"
 USER_AGENT = "bot-vagas/1.0 (projeto de portfolio; busca diaria de estagios)"
 TIMEOUT_SEGUNDOS = 15
 
@@ -57,6 +59,11 @@ class Vaga:
     def eh_estagio(self) -> bool:
         """True se a própria Gupy marcou a vaga como estágio (usado no filtro da fase 2)."""
         return self.tipo == TIPO_ESTAGIO
+
+    @property
+    def eh_banco_talentos(self) -> bool:
+        """True se a vaga é de banco de talentos (ganha etiqueta na mensagem do Telegram)."""
+        return self.tipo == TIPO_BANCO_TALENTOS
 
 
 def _texto_ou_none(valor) -> str | None:
