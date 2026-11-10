@@ -1,0 +1,16 @@
+# Segredos locais
+.env
+
+# Ambiente virtual e caches do Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Bancos SQLite (ex.: os criados em testes)...
+*.db
+# ...exceto o histórico de vagas vistas, que o GitHub Actions commita
+!dados/vagas.db
+
+# Arquivos do macOS
+.DS_Store

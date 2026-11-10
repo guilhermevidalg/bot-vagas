@@ -1,0 +1,102 @@
+[busca]
+# Cada termo vira uma busca separada na Gupy
+termos = [
+    # Geral de tecnologia
+    "estágio TI",
+    "estágio tecnologia",
+    "estágio tecnologia da informação",
+    "estágio sistemas",
+    "estágio sistemas de informação",
+    "estágio computação",
+    "estágio ciência da computação",
+    "estágio engenharia de computação",
+    "estágio análise de sistemas",
+    "estágio informática",
+    "estágio digital",
+    "estagiário TI",
+    "estagiário tecnologia",
+    # Desenvolvimento
+    "estágio desenvolvimento",
+    "estágio desenvolvedor",
+    "estágio programação",
+    "estágio programador",
+    "estágio software",
+    "estágio engenharia de software",
+    "estágio web",
+    "estágio front-end",
+    "estágio frontend",
+    "estágio back-end",
+    "estágio backend",
+    "estágio full stack",
+    "estágio mobile",
+    "estágio android",
+    "estágio ios",
+    "estágio java",
+    "estágio python",
+    "estágio javascript",
+    "estágio react",
+    "estágio .NET",
+    "estágio C#",
+    "estágio node",
+    "estágio APIs",
+    # Dados
+    "estágio dados",
+    "estágio analista de dados",
+    "estágio análise de dados",
+    "estágio analytics",
+    "estágio BI",
+    "estágio business intelligence",
+    "estágio power BI",
+    "estágio SQL",
+    "estágio ciência de dados",
+    "estágio data science",
+    "estágio engenharia de dados",
+    "estágio inteligência artificial",
+    "estágio machine learning",
+    "estágio estatística",
+    "estágio planejamento comercial",
+    "estágio inteligência de mercado",
+    # Automação
+    "estágio automação",
+    "estágio automação de processos",
+    "estágio RPA",
+    "estágio low-code",
+    "estágio processos",
+    # Infra, qualidade e segurança
+    "estágio suporte",
+    "estágio suporte técnico",
+    "estágio service desk",
+    "estágio help desk",
+    "estágio infraestrutura",
+    "estágio redes",
+    "estágio cloud",
+    "estágio DevOps",
+    "estágio QA",
+    "estágio testes",
+    "estágio qualidade de software",
+    "estágio segurança da informação",
+    "estágio cibersegurança",
+    # Produto e projetos
+    "estágio produto",
+    "estágio UX",
+    "estágio projetos TI",
+    "estágio governança de TI",
+    # Inglês (multinacionais)
+    "intern IT",
+    "intern data",
+    "intern developer",
+    "internship technology",
+]
+limite_por_pagina = 100   # quanto pedimos; a API pode devolver menos
+max_paginas = 3           # trava de segurança contra loop infinito
+pausa_segundos = 1        # espera entre requisições
+
+[filtro]
+# Comparação feita em minúsculas e sem acento ("ESTÁGIO" = "estagio")
+palavras_chave = ["estagio", "estagiario", "estagiaria", "intern", "internship"]
+palavras_excluidas = ["senior", "pleno", "trainee", "jovem aprendiz"]
+
+[localizacao]
+# Remota: aceita de qualquer lugar. Presencial/híbrida: só nestes estados.
+estados_permitidos = ["Rio de Janeiro", "RJ"]
+aceitar_local_nao_informado = true
