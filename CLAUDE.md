@@ -47,6 +47,8 @@ pytest -v                    # testes (nunca chamam a Gupy de verdade)
   todos os termos que encontraram a vaga. Um termo com erro não interrompe os outros.
 - `bot_vagas/filtros.py` — `normalizar()`, `contem_palavra()`, `passa_palavras()`,
   `passa_localizacao()` e `filtrar_vagas(vagas, config)`.
+- `bot_vagas/banco.py` — `conectar()`, `esta_vazio()`, `separar_novas()`, `registrar()` e
+  `inicializar()`. Tabela `vagas_vistas` (`id` da Gupy como chave).
 - `dados/vagas.db` — banco SQLite **commitado** pelo Actions (exceção no `.gitignore`).
 
 ## Regras de filtro (Fase 2, implementadas)
@@ -61,17 +63,28 @@ pytest -v                    # testes (nunca chamam a Gupy de verdade)
 - Banco de talentos: não tem o tipo estágio, então passa se o título tiver palavra-chave;
   fica marcado por `eh_banco_talentos`.
 
+## Regras do banco (Fase 3, implementadas)
+- Grava só as vagas **aceitas pelo filtro**; se o filtro mudar, vagas antes recusadas aparecem
+  como novas (desejado).
+- `registrar()` só **depois** do envio no Telegram dar certo; se o envio falhar, as vagas
+  continuam novas e saem na próxima execução.
+- `INSERT OR IGNORE`: registrar a mesma vaga duas vezes não dá erro.
+
 ## Regras combinadas para as próximas fases
-- **Fase 3 — banco (`banco.py`):** SQLite em `dados/vagas.db`. Flag `--inicializar` na primeira
-  execução só popula o banco, sem enviar mensagem.
 - **Fase 4 — Telegram (`telegram.py`):** HTML com link "Ver vaga"; etiqueta "Banco de
   talentos" nas vagas com `eh_banco_talentos`; dividir mensagens acima de
   4096 caracteres; "Nenhuma vaga nova hoje" quando não houver vagas; aviso de falha em caso de
   erro; aviso de busca parcial quando houver `termos_com_falha`.
-- **Fase 5 — `main.py`:** `--dry-run` mostra a mensagem no terminal sem enviar.
+- **Fase 5 — `main.py`:** ordem: buscar → filtrar → `separar_novas` → enviar → `registrar`.
+  - `--dry-run` mostra a mensagem no terminal sem enviar (e sem registrar no banco).
+  - `--inicializar` só popula o banco (`inicializar()`), sem enviar mensagem.
+  - Banco vazio sem `--inicializar`: inicializar automaticamente e enviar só um aviso no
+    Telegram, tipo "Bot iniciado: N vagas registradas. A partir de amanhã você recebe só as
+    novas."
 - **Fase 6 — GitHub Actions:** execução diária, Secrets do Telegram, commit do `dados/vagas.db`.
 
 ## Status
 - [x] Fase 1 — estrutura + busca na Gupy
 - [x] Fase 2 — filtros (palavras-chave, localização, banco de talentos)
-- [ ] Fases 3 a 6
+- [x] Fase 3 — banco SQLite de vagas já vistas
+- [ ] Fases 4 a 6
